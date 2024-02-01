@@ -21,6 +21,10 @@ class Cat:
     def meow(self):
         print(f"{self.name} says: Meow")
 
+    def __add__(self, other):  # +
+        if isinstance(other, Cat):
+            return Cat("Ginger", 0)
+
 
 if __name__ == '__main__':
     tom = Cat("Tom", 2)
@@ -29,3 +33,5 @@ if __name__ == '__main__':
     print(angela)
     tom.meow()
     angela.meow()
+    ginger = tom + angela
+    ginger.meow()
