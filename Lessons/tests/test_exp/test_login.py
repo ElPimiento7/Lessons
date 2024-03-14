@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 import pytest
 
 users = ["user1@mail.com", "user2@mail.com", "user3@mail.com"]
@@ -7,6 +8,8 @@ passwords = ["qqqq", "eeee", "pppp"]
 
 
 def generate_pairs():
+    options = Options()
+    options.add_argument("--headless")
     pairs = []
     for user in users:
         for password in passwords:
@@ -26,8 +29,10 @@ def generate_pairs():
 @pytest.mark.skip
 @pytest.mark.parametrize("creds", generate_pairs())
 def test_login(creds):
+    options = Options()
+    options.add_argument("--headless")
     login, password = creds
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(5)
     driver.get("https://magento.softwaretestingboard.com/customer/account/login")
     driver.find_element(By.ID, "email").send_keys(login)
@@ -39,7 +44,9 @@ def test_login(creds):
 
 @pytest.fixture()
 def page(request):
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(5)
     param = request.param
     if param == "what_new":
@@ -51,12 +58,16 @@ def page(request):
 
 @pytest.mark.parametrize("page", ["what_new"], indirect=True)
 def test_whats_new(page):
+    options = Options()
+    options.add_argument("--headless")
     title = page.find_element(By.CSS_SELECTOR, "h1")
     assert title.text == "What\'s New"
 
 
 @pytest.mark.parametrize("page", ["sale"], indirect=True)
 def test_sale(page):
+    options = Options()
+    options.add_argument("--headless")
     title = page.find_element(By.CSS_SELECTOR, "h1")
     assert title.text == "Sale"
 
