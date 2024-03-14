@@ -12,7 +12,7 @@ def test_one_is_one(seperator):
 
 @allure.feature("Experiments")
 @allure.story("Two is two")
-@pytest.mark.skip
+@pytest.mark.smoke
 def test_two_is_two(all_tests):
     assert 2 == 2
 

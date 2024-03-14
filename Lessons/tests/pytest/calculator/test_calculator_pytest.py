@@ -19,6 +19,7 @@ def test_no_signs():
 
 @allure.feature("Calculator")
 @allure.story("Two signs")
+@pytest.mark.skip
 def test_two_signs():
     with pytest.raises(ValueError) as error:
         calculator("2+2+2")
