@@ -27,6 +27,7 @@ def generate_pairs():
 # )
 
 @pytest.mark.skip
+@pytest.mark.regression
 @pytest.mark.parametrize("creds", generate_pairs())
 def test_login(creds):
     options = Options()
@@ -57,6 +58,7 @@ def page(request):
 
 
 @pytest.mark.parametrize("page", ["what_new"], indirect=True)
+@pytest.mark.regression
 def test_whats_new(page):
     options = Options()
     options.add_argument("--headless")
@@ -65,6 +67,7 @@ def test_whats_new(page):
 
 
 @pytest.mark.parametrize("page", ["sale"], indirect=True)
+@pytest.mark.regression
 def test_sale(page):
     options = Options()
     options.add_argument("--headless")

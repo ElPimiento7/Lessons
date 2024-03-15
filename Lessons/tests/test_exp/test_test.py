@@ -4,7 +4,7 @@ import allure
 
 @allure.feature("Experiments")
 @allure.story("One is one")
-@pytest.mark.regression
+@pytest.mark.smoke
 def test_one_is_one(seperator):
     print(seperator)
     assert 1 == 1
@@ -19,6 +19,7 @@ def test_two_is_two(all_tests):
 
 @allure.feature("Experiments")
 @allure.story("Three is three")
+@pytest.mark.smoke
 @pytest.mark.skip("Bug #42")
 def test_three_is_three(seperator):
     assert 3 == 2

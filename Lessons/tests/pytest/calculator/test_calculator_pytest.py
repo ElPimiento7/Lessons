@@ -5,12 +5,14 @@ from Lessons.calculator import calculator
 
 @allure.feature("Calculator")
 @allure.story("Plus")
+@pytest.mark.smoke
 def test_plus():
     assert calculator("2+2") == 4
 
 
 @allure.feature("Calculator")
 @allure.story("No signs")
+@pytest.mark.smoke
 def test_no_signs():
     with pytest.raises(ValueError) as error:
         calculator("abracadabra")
@@ -19,7 +21,8 @@ def test_no_signs():
 
 @allure.feature("Calculator")
 @allure.story("Two signs")
-@pytest.mark.skip
+@pytest.mark.smoke
+@pytest.mark.skip("Broken")
 def test_two_signs():
     with pytest.raises(ValueError) as error:
         calculator("2+2+2")
