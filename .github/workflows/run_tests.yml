@@ -28,10 +28,10 @@ jobs:
       - name: install dependencies
         run: pip install -r requirements.txt
       - name: regression_tests
-        if: "github.event.inputs.deployment_target == 'first_test'"
+        if: "github.event.inputs.deployment_target == 'regression_tests'"
         run: pytest -v -m "regression"
       - name: smoke_tests
-        if: "github.event.inputs.deployment_target == 'second_test'"
+        if: "github.event.inputs.deployment_target == 'smoke_tests'"
         run: pytest -v -m "smoke"
 
 
