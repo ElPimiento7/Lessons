@@ -9,8 +9,8 @@ on:
         default:
         type: choice
         options:
-          - first_test
-          - second_test
+          - regression_tests
+          - smoke_tests
 
 jobs:
   test:
