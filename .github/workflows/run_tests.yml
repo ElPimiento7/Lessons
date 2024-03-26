@@ -76,5 +76,5 @@ jobs:
         with:
           github_token: ${{ secrets.MY_GITHUB_TOKEN }}
         id: deployment
-        uses: actions/deploy-pages@v1.2.9
+        uses: actions/deploy-pages@v4.0.5
     
