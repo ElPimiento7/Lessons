@@ -70,11 +70,16 @@ jobs:
     steps:
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v3
+        
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          artifact_name: github-pages
+          
       - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MY_GITHUB_TOKEN }}
         id: deployment
-        uses: actions/deploy-pages@v4.0.5
+        
     
