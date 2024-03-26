@@ -22,9 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Download history
     steps:
-      - name: Generate unique artifact name
-        id: generate-artifact-name
-        run: echo "allure-results-${{ github.run_id }}" >> artifact-name.txt
       - name: setup Pyton
         uses: actions/setup-python@v5
         with:
@@ -46,7 +43,7 @@ jobs:
       - name: Store allure history
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-${{ github.run_id }}
+          name: allure-results
           path:
             allure-results
           retention-days: 1
