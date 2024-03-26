@@ -41,7 +41,7 @@ jobs:
           -o artifacts.zip
       - run: mkdir allure-results && unzip artifact.zip -d allure-results
       - name: Store allure history
-        uses: actions/upload-artifacts@v4
+        uses: actions/upload-artifact@v4
         with:
           name: allure-result
           path:
