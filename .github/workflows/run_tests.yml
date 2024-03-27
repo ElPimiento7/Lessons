@@ -68,16 +68,15 @@ jobs:
         uses: actions/download-artifact@v4  
       - name: regression_tests
         if: "github.event.inputs.deployment_target == 'regression_tests'"
-        run: pytest -v -m "regression" --alluredir==allure-results
+        run: pytest -v -m "regression" --alluredir==allure-results/regression
       - name: smoke_tests
         if: "github.event.inputs.deployment_target == 'smoke_tests'"
-        run: pytest -v -m "smoke" --alluredir==allure-results
+        run: pytest -v -m "smoke" --alluredir==allure-results/smoke
       - name: Store allure results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path:
-            allure-results
+          path: allure-results
           retention-days: 1
 
   generate-report:
