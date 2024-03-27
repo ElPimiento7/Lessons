@@ -67,6 +67,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: download-history
+    outputs:
+      regression_tests: ${{ steps.regression_tests.outcome }}
+      smoke_tests: ${{ steps.smoke_tests.outcome }}
+      all: ${{ steps.all.outcome }}
 
     steps:
       - name: Checkout repository
@@ -135,7 +139,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4.0.5
-      - name: send notification
+      - name: success
+        if: needs.test.outputs.regression_test != "failure" && needs.test.outputs.smoke_tests != "failure" && needs.test.outputs.all != "failure"
         run: |
-          curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - :white_check_mark:"}'
+          curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - All tests passed :white_check_mark:"}'
+      - name: failure
+        if: needs.test.outputs.regression_test == "failure" && needs.test.outputs.smoke_tests == "failure" && needs.test.outputs.all == "failure"
+        run: |
+          curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - There are some issues :warning:"}'
 
