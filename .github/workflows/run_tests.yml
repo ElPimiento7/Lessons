@@ -24,31 +24,31 @@ jobs:
     runs-on: ubuntu-latest
     name: Download history
     steps:
-      - name: setup Pyton
+      - name: setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12.1"
       - run: >
           ARTIFACT_ID=$(curl -L 
-          -H "Accept: Accept: application/vnd.github+json" 
+          -H "Accept: application/vnd.github+json" 
           -H "X-GitHub-Api-Version: 2022-11-28" 
           "https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts?name=allure-results" 
           | python -c "import sys, json; print(json.load(sys.stdin)['artifacts'][0]['id']);") 
           &&
           curl -L
-          -H "Accept: Accept: application/vnd.github+json"
+          -H "Accept: application/vnd.github+json"
           -H "Authorization: Bearer ${{ secrets.TOKEN }}"
           -H "X-GitHub-Api-Version: 2022-11-28"
           https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts/$ARTIFACT_ID/zip
           -o artifacts.zip &&
           REPORT_ID=$(curl -L 
-          -H "Accept: Accept: application/vnd.github+json" 
+          -H "Accept: application/vnd.github+json" 
           -H "X-GitHub-Api-Version: 2022-11-28" 
           "https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts?name=github-pages" 
           | python -c "import sys, json; print(json.load(sys.stdin)['artifacts'][0]['id']);") 
           &&
           curl -L
-          -H "Accept: Accept: application/vnd.github+json"
+          -H "Accept: application/vnd.github+json"
           -H "Authorization: Bearer ${{ secrets.TOKEN }}"
           -H "X-GitHub-Api-Version: 2022-11-28"
           https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts/$REPORT_ID/zip
@@ -72,7 +72,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: setup Pyton
+      - name: setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12.1"
@@ -84,15 +84,15 @@ jobs:
         uses: actions/download-artifact@v4  
       - name: regression_tests
         if: "github.event.inputs.deployment_target == 'regression_tests'"
-        run: pytest -v -m "regression" --alluredir==allure-results
+        run: pytest -v -m "regression" --alluredir=allure-results
         continue-on-error: true
       - name: smoke_tests
         if: "github.event.inputs.deployment_target == 'smoke_tests'"
-        run: pytest -v -m "smoke" --alluredir==allure-results
+        run: pytest -v -m "smoke" --alluredir=allure-results
         continue-on-error: true
       - name: all
         if: "github.event.inputs.deployment_target == 'all'"
-        run: pytest -v -m --alluredir==allure-results
+        run: pytest -v -m --alluredir=allure-results
         continue-on-error: true
       - name: Store allure results
         uses: actions/upload-artifact@v4
