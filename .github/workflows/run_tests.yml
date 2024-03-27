@@ -64,7 +64,7 @@ jobs:
             allure-results
           retention-days: 1
         
-  test:
+  Test:
     runs-on: ubuntu-latest
     needs: download-history
     outputs:
@@ -86,14 +86,17 @@ jobs:
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v4  
       - name: regression_tests
+        id: regression_tests
         if: "github.event.inputs.deployment_target == 'regression_tests'"
         run: pytest -v -m "regression" --alluredir=allure-results
         continue-on-error: true
       - name: smoke_tests
+        id: smoke_tests
         if: "github.event.inputs.deployment_target == 'smoke_tests'"
         run: pytest -v -m "smoke" --alluredir=allure-results
         continue-on-error: true
       - name: all
+        id: all
         if: "github.event.inputs.deployment_target == 'all'"
         run: pytest -v --alluredir=allure-results
         continue-on-error: true
