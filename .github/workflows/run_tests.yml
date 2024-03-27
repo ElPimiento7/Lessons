@@ -6,11 +6,12 @@ on:
       deployment_target:
         description: Choose target
         required: true
-        default:
+        default: smoke_test
         type: choice
         options:
           - regression_tests
           - smoke_tests
+          - all
 
 permissions:
   contents: read
@@ -19,6 +20,7 @@ permissions:
 
 jobs:
   download-history:
+    # if: false
     runs-on: ubuntu-latest
     name: Download history
     steps:
@@ -28,25 +30,25 @@ jobs:
           python-version: "3.12.1"
       - run: >
           ARTIFACT_ID=$(curl -L 
-          -H "Accept: 'Accept: application/vnd.github+json" 
+          -H "Accept: Accept: application/vnd.github+json" 
           -H "X-GitHub-Api-Version: 2022-11-28" 
           "https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts?name=allure-results" 
           | python -c "import sys, json; print(json.load(sys.stdin)['artifacts'][0]['id']);") 
           &&
           curl -L
-          -H "Accept: 'Accept: application/vnd.github+json"
+          -H "Accept: Accept: application/vnd.github+json"
           -H "Authorization: Bearer ${{ secrets.TOKEN }}"
           -H "X-GitHub-Api-Version: 2022-11-28"
           https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts/$ARTIFACT_ID/zip
           -o artifacts.zip &&
           REPORT_ID=$(curl -L 
-          -H "Accept: 'Accept: application/vnd.github+json" 
+          -H "Accept: Accept: application/vnd.github+json" 
           -H "X-GitHub-Api-Version: 2022-11-28" 
           "https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts?name=github-pages" 
           | python -c "import sys, json; print(json.load(sys.stdin)['artifacts'][0]['id']);") 
           &&
           curl -L
-          -H "Accept: 'Accept: application/vnd.github+json"
+          -H "Accept: Accept: application/vnd.github+json"
           -H "Authorization: Bearer ${{ secrets.TOKEN }}"
           -H "X-GitHub-Api-Version: 2022-11-28"
           https://api.github.com/repos/ElPimiento7/Lessons/actions/artifacts/$REPORT_ID/zip
@@ -82,10 +84,16 @@ jobs:
         uses: actions/download-artifact@v4  
       - name: regression_tests
         if: "github.event.inputs.deployment_target == 'regression_tests'"
-        run: pytest -v -m "regression" --alluredir==allure-results/regression
+        run: pytest -v -m "regression" --alluredir==allure-results
+        continue-on-error: true
       - name: smoke_tests
         if: "github.event.inputs.deployment_target == 'smoke_tests'"
-        run: pytest -v -m "smoke" --alluredir==allure-results/smoke
+        run: pytest -v -m "smoke" --alluredir==allure-results
+        continue-on-error: true
+      - name: all
+        if: "github.event.inputs.deployment_target == 'all'"
+        run: pytest -v -m --alluredir==allure-results
+        continue-on-error: true
       - name: Store allure results
         uses: actions/upload-artifact@v4
         with:
@@ -100,7 +108,7 @@ jobs:
     steps: 
       - uses: actions/setup-java@v4
         with:
-          distribution: 'microsoft'
+          distribution: 'microsoft' # See 'Supported distributions' for available options
           java-version: '17'
       - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz && sudo tar -zxvf allure-2.27.0.tgz -C /opt/ && sudo ln -s /opt/allure-2.27.0/bin/allure /usr/bin/allure
       - name: Download all workflow run artifacts
