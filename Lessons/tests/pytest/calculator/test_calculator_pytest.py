@@ -21,8 +21,8 @@ def test_no_signs():
 
 @allure.feature("Calculator")
 @allure.story("Two signs")
+@allure.title("Failed test")
 @pytest.mark.smoke
-@pytest.mark.skip("Broken")
 def test_two_signs():
     with pytest.raises(ValueError) as error:
         calculator("2+2+2")
