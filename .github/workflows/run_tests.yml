@@ -137,5 +137,5 @@ jobs:
         uses: actions/deploy-pages@v4.0.5
       - name: send notification
         run: |
-          curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "From GitHub message :white_check_mark:. https://elpimiento7.github.io/Lessons/"}'
+          curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - :white_check_mark:"}'
 
