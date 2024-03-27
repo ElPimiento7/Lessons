@@ -88,12 +88,12 @@ jobs:
       - name: regression_tests
         id: regression_tests
         if: "github.event.inputs.deployment_target == 'regression_tests'"
-        run: pytest -v -m "regression" --alluredir=allure-results
+        run: pytest -v -m regression --alluredir=allure-results
         continue-on-error: true
       - name: smoke_tests
         id: smoke_tests
         if: "github.event.inputs.deployment_target == 'smoke_tests'"
-        run: pytest -v -m "smoke" --alluredir=allure-results
+        run: pytest -v -m smoke --alluredir=allure-results
         continue-on-error: true
       - name: all
         id: all
