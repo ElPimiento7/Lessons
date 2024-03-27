@@ -144,7 +144,7 @@ jobs:
         run: |
           curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - All tests passed :white_check_mark:"}'
       - name: failure
-        if: needs.test.outputs.regression_test == 'failure' && needs.test.outputs.smoke_tests == 'failure' && needs.test.outputs.all == 'failure'
+        if: needs.test.outputs.regression_test == 'failure' || needs.test.outputs.smoke_tests == 'failure' || needs.test.outputs.all == 'failure'
         run: |
           curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - There are some issues :warning:"}'
 
