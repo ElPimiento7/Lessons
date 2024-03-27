@@ -146,10 +146,10 @@ jobs:
         if: needs.test.outputs.regression_tests != 'failure' && needs.test.outputs.smoke_tests != 'failure' && needs.test.outputs.all != 'failure'
         run: |
           curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - All tests passed :white_check_mark:"}'
-          curl --location 'https://api.telegram.org/bot6984990599:${{ secrets.TG_TOKEN }}/sendMessage' --header 'Content-Type: application/json' --data '{"chat_id": 270756677, "text": "Test results - https://elpimiento7.github.io/Lessons/ - All tests passed :white_check_mark:"}'
+          curl --location 'https://api.telegram.org/bot6984990599:${{ secrets.TG_TOKEN }}/sendMessage' --header 'Content-Type: application/json' --data '{"chat_id": 270756677, "text": "Test results - https://elpimiento7.github.io/Lessons/ - ALL TESTS PASSED ✓"}'
       - name: failure
         if: needs.test.outputs.regression_tests == 'failure' || needs.test.outputs.smoke_tests == 'failure' || needs.test.outputs.all == 'failure'
         run: |
           curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "Test results - https://elpimiento7.github.io/Lessons/ - There are some issues :warning:"}'
-          curl --location 'https://api.telegram.org/bot6984990599:${{ secrets.TG_TOKEN }}/sendMessage' --header 'Content-Type: application/json' --data '{"chat_id": 270756677, "text": "Test results - https://elpimiento7.github.io/Lessons/ - There are some issues :warning:"}'
+          curl --location 'https://api.telegram.org/bot6984990599:${{ secrets.TG_TOKEN }}/sendMessage' --header 'Content-Type: application/json' --data '{"chat_id": 270756677, "text": "Test results - https://elpimiento7.github.io/Lessons/ - THERE ARE SOME ISSUES ✕"}'
 
