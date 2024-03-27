@@ -137,5 +137,5 @@ jobs:
         uses: actions/deploy-pages@v4.0.5
       - name: send notification
         run: |
-          curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --header 'Cookie: __cfruid=ec61cbc31b73f5a4888fa9fad7505ca077672398-1711536771; __dcfduid=283d5680ec2811ee969e82a49da42051; __sdcfduid=283d5680ec2811ee969e82a49da42051463fbeb7dd5a65134e7332c8f608d9a179f39cc523b69451847a1462aa4b4991; _cfuvid=SldszVkyaAVIi1omHNH_SifLgN5OvCQconMYVVlN3dI-1711536771350-0.0.1.1-604800000' --data'{"content": "From GitHub message :white_check_mark:. https://elpimiento7.github.io/Lessons/"}'
+          curl --location 'https://discord.com/api/webhooks/${{ secrets.WH_DISCORD }}' --header 'Content-Type: application/json' --data '{"content": "From GitHub message :white_check_mark:. https://elpimiento7.github.io/Lessons/"}'
 
